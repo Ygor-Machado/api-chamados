@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Departament;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DepartamentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $departament = Departament::all();
@@ -24,32 +23,27 @@ class DepartamentController extends Controller
 
         $departament = $departament->create($data);
 
-        return response()->json(status: JsonResponse::HTTP_CREATED);
+        return response()->json(status: Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Departament $departament)
     {
-        //
+        return response()->json($departament);
     }
 
-    /**
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Departament $departament)
     {
-        //
+        $data = $request->only(['name']);
+
+        $departament->update($data);
+
+        return response()->json($departament);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Departament $departament)
     {
-        //
+        $departament->delete();
+
+        return response()->json(status: Response::HTTP_NO_CONTENT);
     }
 }
