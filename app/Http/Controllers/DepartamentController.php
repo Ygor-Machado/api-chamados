@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departament;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DepartamentController extends Controller
 {
-
     public function index()
     {
         $departament = Departament::all();
