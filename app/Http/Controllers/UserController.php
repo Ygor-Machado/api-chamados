@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response()->json($users);
+        return response()->json($users, Response::HTTP_OK);
     }
 
     /**
@@ -24,7 +25,7 @@ class UserController extends Controller
     {
         $users->create($request->all());
 
-        return response()->json($users);
+        return response()->json(['message' => 'Usuário criado com sucesso!', 'user' => $users], Response::HTTP_CREATED);
     }
 
     /**
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json($user);
+        return response()->json($user, Response::HTTP_OK);
     }
 
     /**
@@ -42,7 +43,7 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
-        return response()->json($user);
+        return response()->json(['message' => 'Usuário atualizado com sucesso!', 'user' => $user], Response::HTTP_OK);
     }
 
     /**
@@ -52,6 +53,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return response()->json($user);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
