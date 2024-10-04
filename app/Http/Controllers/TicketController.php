@@ -14,7 +14,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role == 'admin') {
+        if ($this->authorize('viewAny', Ticket::class)) {
             $tickets = Ticket::all();
         } else {
             $tickets = Ticket::where('user_id', auth()->user()->id)->get();
@@ -44,9 +44,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        if (auth()->user()->id !== $ticket->user_id && auth()->user()->role !== 'admin') {
-            return response()->json(['message' => 'Você não tem permissão para visualizar este ticket'], Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('view', $ticket);
 
         return  new TicketResource($ticket);
     }
@@ -56,9 +54,7 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        if (auth()->user()->id !== $ticket->user_id && auth()->user()->role !== 'admin') {
-            return response()->json(['message' => 'Você não tem permissão para atualizar este ticket'], Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('update', $ticket);
 
         $ticket->update($request->all());
 

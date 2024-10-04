@@ -23,9 +23,9 @@ class UserController extends Controller
      */
     public function store(Request $request, User $users)
     {
-        $users->create($request->all());
+        $user = $users->create($request->all());
 
-        return response()->json(['message' => 'Usuário criado com sucesso!', 'user' => $users], Response::HTTP_CREATED);
+        return response()->json(['message' => 'Usuário criado com sucesso!', 'user' => $user], Response::HTTP_CREATED);
     }
 
     /**
