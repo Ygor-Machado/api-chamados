@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('tickets')->get();
 
         return response()->json($users, Response::HTTP_OK);
     }
