@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('admin')->group(function () {
         Route::apiResource('departaments', DepartamentController::class)->except('index');
         Route::put('tickets/{ticket}', [TicketController::class, 'update']);
+        Route::delete('tickets/{ticket}', [TicketController::class, 'destroy']);
         Route::apiResource('users', UserController::class);
     });
 });
